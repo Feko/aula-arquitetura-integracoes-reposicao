@@ -1,0 +1,305 @@
+swagger: "2.0"
+info:
+  description: "Swagger do trabalho de Arquitetura de Integrações"
+  version: "1.0.0"
+  title: "Swagger AcmeAP"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "acmeap.swagger.io"
+basePath: "/api"
+tags:
+- name: "Clientes"
+  description: "Operações relativas ao cadastro de clientes"
+- name: "Instalacoes"
+  description: "Operações referentes a Instalações"
+- name: "Faturas"
+  description: "Operações com faturas"
+schemes:
+- "https"
+- "http"
+paths:
+  /clientes:
+    post:
+      tags:
+      - "Clientes"
+      summary: "Cadastrar um novo cliente"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto cliente para criar"
+        required: true
+        schema:
+          $ref: "#/definitions/Cliente"
+      responses:
+        "405":
+          description: "Invalid input"
+        "201":
+          description: "Created"
+    get:
+      tags:
+      - "Clientes"
+      summary: "Consultar clientes utilizando query string (Ou listagem)"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Cliente"
+  /clientes/{cpf}:
+    get:
+      tags:
+      - "Clientes"
+      summary: "Obtem um cliente usando CPF como chave"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "cpf"
+        in: "path"
+        description: "CPF do Cliente"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Cliente"
+        "400":
+          description: "CPF Invalido"
+        "404":
+          description: "Cliente nao encontrado"
+  /instalacoes:
+    get:
+      tags:
+      - "Instalacoes"
+      summary: "Consulta as instalações cadastradas utilizando query string (Ou listagem)"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Instalacao"
+    post:
+      tags:
+      - "Instalacoes"
+      summary: "Cria uma nova instalação"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto Instalacao para criar"
+        required: true
+        schema:
+          $ref: "#/definitions/Instalacao"
+      responses:
+        "405":
+          description: "Invalid input"
+        "201":
+          description: "Created"
+  /instalacoes/{codigo}:
+    get:
+      tags:
+      - "Instalacoes"
+      summary: "Obtem uma instalação pelo código"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "codigo"
+        in: "path"
+        description: "Codigo da Instalacao"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Instalacao"
+        "400":
+          description: "Codigo Invalido"
+        "404":
+          description: "Instalacao nao encontrada"
+  /instalacoes/cpf/{cpf}:
+    get:
+      tags:
+      - "Instalacoes"
+      summary: "Deprecated, utilizar query string"
+      deprecated: true
+      parameters:
+      - name: "cpf"
+        in: "path"
+        description: "CPF do Cliente"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Fatura"
+  /faturas:
+    get:
+      tags:
+      - "Faturas"
+      summary: "Consulta as faturas cadastradas utilizando query string (Ou listagem)"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Fatura"
+    post:
+      tags:
+      - "Faturas"
+      summary: "Cria uma nova fatura"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto Fatura para criar"
+        required: true
+        schema:
+          $ref: "#/definitions/Fatura"
+      responses:
+        "405":
+          description: "Invalid input"
+        "201":
+          description: "Created"
+  /faturas/{codigo}:
+    get:
+      tags:
+      - "Faturas"
+      summary: "Obtem uma fatura pelo código"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "codigo"
+        in: "path"
+        description: "Codigo da Fatura"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Fatura"
+        "400":
+          description: "Codigo Invalido"
+        "404":
+          description: "Fatura nao encontrada"
+  /faturas/cpf/{cpf}:
+    get:
+      tags:
+      - "Faturas"
+      summary: "Deprecated, utilizar query string"
+      deprecated: true
+      parameters:
+      - name: "cpf"
+        in: "path"
+        description: "CPF do Cliente"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Fatura"
+definitions:
+  Cliente:
+    type: "object"
+    properties:
+      cpf:
+        type: "string"
+        format: "string"
+      nome:
+        type: "string"
+        format: "string"
+      nascimento:
+        type: "string"
+        format: "date-time"
+      endereco:
+        type: "string"
+        format: "string"
+    xml:
+      name: "Cliente"
+  Instalacao:
+    type: "object"
+    properties:
+      codigo:
+        type: "integer"
+        format: "int64"
+      endereco:
+        type: "string"
+    xml:
+      name: "Instalacao"
+  Fatura:
+    type: "object"
+    properties:
+      codigo:
+        type: "integer"
+        format: "int64"
+      instalacao:
+        type: "integer"
+        format: "int64"
+      cpf:
+        type: "string"
+      vencimento:
+        type: "string"
+        format: "date-time"
+      leitura:
+        type: "string"
+        format: "date-time"
+      valor_leitura:
+        type: "number"
+      valor_fatura:
+        type: "number"
+    xml:
+      name: "Fatura"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
